@@ -161,6 +161,6 @@ Include a brief note about:
 
 ## Questions?
 
-If anything is unclear, email [HIRING_EMAIL]. We're happy to clarify—asking questions is not penalized.
+If anything is unclear, email tate.walker@versent.com.au. We're happy to clarify—asking questions is not penalized.
 
 Good luck! 🚀
