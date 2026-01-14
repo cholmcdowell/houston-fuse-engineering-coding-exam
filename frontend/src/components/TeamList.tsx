@@ -26,17 +26,24 @@ import { TeamMember, DEPARTMENTS, Department } from "../types/team";
 export function TeamList() {
   // TODO: Implement this component
 
-  // TeamMember data
-  const [team, setTeam] = useState<TeamMember[]>([]);
+  // Task 1
+  const [team, setTeam] = useState<TeamMember[]>([]); // TeamMember Data
+  const [loading, setLoading] = useState(true); // Loading until false
+  
 
   // Collect TeamMembers
   useEffect(() => {
     async function loadTM() { // loading team members 
+      setLoading(true);
       const response = await fetchTeamMembers();
 
-      if (response.success && response.data) {
+      // wait 1 second of loading time (developement purposes)
+      setTimeout(() => {
+        if (response.success && response.data) {
         setTeam(response.data);
       }
+      setLoading(false); // done loading
+      }, 1000); // 1s
     }
 
     loadTM(); // call function
@@ -44,26 +51,23 @@ export function TeamList() {
 
   return (
     <div>
-      <h1> TEAM MEMBERS </h1>
-      <ul>
-        {team.map((member) => (
-          <li key={member.id}>
-            <strong>{member.name}</strong><br />
-            Role: {member.role}<br />
-            Department: {member.department}<br />
-            Email: {member.email}
-          </li>
-        ))}
-      </ul>
+      <h1>TEAM MEMBERS</h1>
 
-
-
-      {/* Hint: You might want sections for:
-          - Filter controls (search input, department dropdown)
-          - Loading state
-          - Error state  
-          - Team member list/grid
-      */}
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ul>
+          {team.map((member) => (
+            <li key={member.id} style={{ marginBottom: "1rem" }}>
+              <strong>{member.name}</strong><br />
+              Role: {member.role}<br />
+              Department: {member.department}<br />
+              Email: {member.email}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
+
 }
