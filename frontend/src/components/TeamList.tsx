@@ -30,6 +30,9 @@ export function TeamList() {
   const [team, setTeam] = useState<TeamMember[]>([]); // TeamMember Data
   const [loading, setLoading] = useState(true); // Loading until false
   const [alarm, setAlarm] = useState<string | null>(null); // Error loading
+
+  // Task 2
+  const [nameFilter, setNameFilter] = useState<string>("");
   
 
   // Collect TeamMembers
@@ -63,14 +66,28 @@ export function TeamList() {
     <div>
       <h1>TEAM MEMBERS</h1>
 
+    <input
+      type="text"
+      placeholder="Search..."
+      value={nameFilter}
+      onChange={(x) => setNameFilter(x.target.value)}
+    />
+
       {loading ? (
         <p>Loading...</p>
       ) : alarm ? (
         <p>{alarm}</p>
       ) : (
         <ul>
-          {team.map((member) => (
-            <li key={member.id} style={{ marginBottom: "1rem" }}>
+          {team
+          .filter((member) =>
+            member.name.toLocaleLowerCase().includes(nameFilter.toLocaleLowerCase())
+          )
+          .sort((a, b) =>
+            a.name.localeCompare(b.name)
+          )
+          .map((member) => (
+            <li key={member.id}>
               <strong>{member.name}</strong><br />
               Role: {member.role}<br />
               Department: {member.department}<br />
