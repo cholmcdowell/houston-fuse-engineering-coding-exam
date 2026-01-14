@@ -18,12 +18,42 @@
  * Feel free to create additional components if you'd like!
  */
 
+// Adding imports from react and other helper functions
+import { useEffect, useState } from "react";
+import { fetchTeamMembers } from "../api/team";
+import { TeamMember, DEPARTMENTS, Department } from "../types/team";
+
 export function TeamList() {
   // TODO: Implement this component
 
+  // TeamMember data
+  const [team, setTeam] = useState<TeamMember[]>([]);
+
+  // Collect TeamMembers
+  useEffect(() => {
+    async function loadTM() { // loading team members 
+      const response = await fetchTeamMembers();
+      
+      if (response.success && response.data) {
+        setTeam(response.data);
+      }
+    }
+
+    loadTM(); // call function
+  }, []);
+
   return (
     <div>
-      <p>Replace this with your implementation!</p>
+      <h1> TEAM MEMBERS </h1>
+      <ul>
+        {team.map((member) => (
+          <li key={member.id}>
+            {member.name}
+          </li>
+        ))}
+      </ul>
+
+
 
       {/* Hint: You might want sections for:
           - Filter controls (search input, department dropdown)
