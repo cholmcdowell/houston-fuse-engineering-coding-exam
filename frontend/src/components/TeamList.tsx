@@ -33,8 +33,11 @@ export function TeamList() {
 
   // Task 2
   const [nameFilter, setNameFilter] = useState<string>("");
-  
 
+  // Task 3
+  const [deptFilter, setDeptFilter] = useState<string>("");
+  
+  
   // Collect TeamMembers
   useEffect(() => {
     async function loadTM() { // loading team members 
@@ -65,13 +68,25 @@ export function TeamList() {
   return (
     <div>
       <h1>TEAM MEMBERS</h1>
-
-    <input
+      
+    <input // Name filtering
       type="text"
       placeholder="Search..."
       value={nameFilter}
       onChange={(x) => setNameFilter(x.target.value)}
     />
+
+    <select // Department filtering
+      value={deptFilter}
+      onChange={(x) => setDeptFilter(x.target.value)}
+    >
+      <option value="">All Departments</option>
+      {DEPARTMENTS.map((dept) => (
+      <option key={dept} value={dept}>
+        {dept}
+      </option>
+      ))}
+    </select>
 
       {loading ? (
         <p>Loading...</p>
@@ -82,6 +97,9 @@ export function TeamList() {
           {team
           .filter((member) =>
             member.name.toLocaleLowerCase().includes(nameFilter.toLocaleLowerCase())
+          )
+          .filter((member) =>
+            deptFilter ? member.department === deptFilter : true
           )
           .sort((a, b) =>
             a.name.localeCompare(b.name)
