@@ -29,21 +29,31 @@ export function TeamList() {
   // Task 1
   const [team, setTeam] = useState<TeamMember[]>([]); // TeamMember Data
   const [loading, setLoading] = useState(true); // Loading until false
+  const [alarm, setAlarm] = useState<string | null>(null); // Error loading
   
 
   // Collect TeamMembers
   useEffect(() => {
     async function loadTM() { // loading team members 
       setLoading(true);
-      const response = await fetchTeamMembers();
+      setAlarm(null); // reset error before fetching
 
-      // wait 1 second of loading time (developement purposes)
-      setTimeout(() => {
-        if (response.success && response.data) {
-        setTeam(response.data);
+      try {
+        const response = await fetchTeamMembers();
+
+        // wait 1 second of loading time (developement purposes)
+        setTimeout(() => {
+          if (response.success && response.data) {
+          setTeam(response.data);
+          } else {
+            setAlarm(response.error || "Failed to load team members.");
+          }
+          setLoading(false); // done loading
+        }, 1000); // 1s
+      } catch (err) {
+        setAlarm("Failed to fetch team members.");
+        setLoading(false);
       }
-      setLoading(false); // done loading
-      }, 1000); // 1s
     }
 
     loadTM(); // call function
@@ -55,6 +65,8 @@ export function TeamList() {
 
       {loading ? (
         <p>Loading...</p>
+      ) : alarm ? (
+        <p>{alarm}</p>
       ) : (
         <ul>
           {team.map((member) => (
