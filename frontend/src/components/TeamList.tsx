@@ -33,7 +33,7 @@ export function TeamList() {
   useEffect(() => {
     async function loadTM() { // loading team members 
       const response = await fetchTeamMembers();
-      
+
       if (response.success && response.data) {
         setTeam(response.data);
       }
@@ -48,7 +48,10 @@ export function TeamList() {
       <ul>
         {team.map((member) => (
           <li key={member.id}>
-            {member.name}
+            <strong>{member.name}</strong><br />
+            Role: {member.role}<br />
+            Department: {member.department}<br />
+            Email: {member.email}
           </li>
         ))}
       </ul>
