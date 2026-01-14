@@ -1,0 +1,41 @@
+Versent Take-Home-Exam Notes:
+
+    Design:
+
+    I approached this assignment by familiarizing myself with Docker Desktop, React, and JS.
+    I utilized useState and useEffect hook to manage component state and handle API requests.
+    Fetching data was through the backend and filtering from the client-side. 
+
+    Workflow:
+
+        ~Initial setup~
+        1. Fork master
+        2. Add Tate Walker (GitHub: @TateWalker)
+        3. Install neccessary libraries and tools
+        4. Follow Getting Started
+
+        TASK I
+        1. Docker Desktop for backend setup and run locally
+        2. TeamMember collection and data display
+            2.1 Used Dev Tools in browser to find mapping issues
+        3. Added 1 second to loading time to illustrate functionality
+            3.1 Would handle with more care, but not for this specific small demo
+        4. Error handling on loading or requests
+            4.1 For testing, stopped backend through Docker Desktop -> refreshed page
+        
+        TASK II
+        1. Search bar to take user text
+        2. nameFilter React state -> keeps React in charge of value (rather than DOM)
+        3. setNameFilter updates state -> React re-renders -> list filters live
+        
+        TASK III
+        1. Similar to TASK II, but a drop down menu for distinct department values
+        2. User chooses from DEPARTMENTS[] list of values
+            2.1 frontend\src\types\team.ts
+
+    Improvements:
+
+        - Styling would be more presentable.
+        - isMounted() implemented in the loading functionality to avoid setting state on an 
+            unmounted component, if user navigates away from page. 
+        - Emails of members would be a hotlink to directly email the individual.
